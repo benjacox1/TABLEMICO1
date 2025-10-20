@@ -1,4 +1,7 @@
-# Tablemico (Django)
+# TABLEMICO1
+Página web para venta de juegos interactivos.
+
+## Proyecto (Django)
 
 Un proyecto Django listo para desarrollo local y despliegue en la nube.
 
