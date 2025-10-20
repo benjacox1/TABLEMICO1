@@ -6,3 +6,4 @@ django-jazzmin
 dj-database-url
 whitenoise
 gunicorn
+python-dotenv

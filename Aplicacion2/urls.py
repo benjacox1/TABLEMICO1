@@ -23,6 +23,9 @@ urlpatterns = [
         auth_views.LoginView.as_view(template_name="Aplicacion2/login.html"),
         name="login",
     ),
+    # Inicio de sesión por código (OTP por email)
+    path("login-codigo/", views.login_por_codigo_solicitar, name="login_codigo_solicitar"),
+    path("login-codigo/verificar/", views.login_por_codigo_verificar, name="login_codigo_verificar"),
     path("logout/", views.salir, name="salir"),
 
     # ============================================================

@@ -8,6 +8,8 @@ from django.templatetags.static import static
 from django.http import HttpResponse, Http404, FileResponse
 from django.conf import settings
 from django.core.mail import send_mail
+from django.contrib.auth.models import User
+from django.utils.crypto import get_random_string
 
 import os
 import shutil
@@ -137,6 +139,81 @@ def salir(request):
     logout(request)
     messages.info(request, "Has cerrado sesión correctamente.")
     return redirect("Aplicacion2:bienvenida")
+
+
+# ============================================================
+# LOGIN POR CÓDIGO (OTP vía email)
+# ============================================================
+def login_por_codigo_solicitar(request):
+    if request.method == "POST":
+        email = request.POST.get("email", "").strip().lower()
+        if not email:
+            messages.error(request, "Ingresá tu correo electrónico.")
+            return redirect("Aplicacion2:login_codigo_solicitar")
+
+        # Buscar usuario por email
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            messages.error(request, "No existe un usuario con ese correo.")
+            return redirect("Aplicacion2:login_codigo_solicitar")
+
+        # Generar código de 6 dígitos
+        codigo = get_random_string(length=6, allowed_chars="0123456789")
+        request.session["otp_email"] = email
+        request.session["otp_code"] = codigo
+
+        asunto = "Tu código de acceso"
+        cuerpo = f"Tu código de verificación es: {codigo}. Caduca en 10 minutos."
+
+        enviado = False
+        try:
+            # Si hay credenciales, intentar enviar
+            if settings.EMAIL_HOST_USER:
+                send_mail(asunto, cuerpo, settings.DEFAULT_FROM_EMAIL, [email])
+                enviado = True
+        except Exception as e:
+            logger.warning(f"Fallo al enviar OTP a {email}: {e}")
+
+        if settings.DEBUG or not settings.EMAIL_HOST_USER or not enviado:
+            # Mostrar el código en pantalla para entorno de pruebas
+            messages.info(request, f"Código de verificación (pruebas): {codigo}")
+
+        messages.success(request, "Te enviamos un código al correo (o míralo arriba en modo pruebas).")
+        return redirect("Aplicacion2:login_codigo_verificar")
+
+    return render(request, "Aplicacion2/login_codigo_solicitar.html")
+
+
+def login_por_codigo_verificar(request):
+    if request.method == "POST":
+        codigo_ingresado = (request.POST.get("codigo") or "").strip()
+        codigo_session = request.session.get("otp_code")
+        email = request.session.get("otp_email")
+
+        if not email or not codigo_session:
+            messages.error(request, "Sesión expirada. Volvé a solicitar el código.")
+            return redirect("Aplicacion2:login_codigo_solicitar")
+
+        if codigo_ingresado != codigo_session:
+            messages.error(request, "Código incorrecto. Intentá de nuevo.")
+            return redirect("Aplicacion2:login_codigo_verificar")
+
+        # Autenticar al usuario por email
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            messages.error(request, "El usuario ya no existe.")
+            return redirect("Aplicacion2:login_codigo_solicitar")
+
+        login(request, user)
+        # Limpiar el OTP de la sesión
+        for k in ("otp_code", "otp_email"):
+            request.session.pop(k, None)
+        messages.success(request, "Sesión iniciada correctamente.")
+        return redirect("Aplicacion2:inicio")
+
+    return render(request, "Aplicacion2/login_codigo_verificar.html")
 
 
 # ============================================================

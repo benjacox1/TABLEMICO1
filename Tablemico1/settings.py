@@ -8,6 +8,7 @@ import os
 import pymysql
 import dj_database_url
 from django.core.exceptions import ImproperlyConfigured
+from dotenv import load_dotenv
 
 # ==============================
 # 🔧 CONECTOR MYSQL
@@ -18,6 +19,9 @@ pymysql.install_as_MySQLdb()
 # 📁 RUTAS BASE DEL PROYECTO
 # ==============================
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Cargar variables de entorno desde .env (si existe)
+load_dotenv(BASE_DIR / ".env")
 
 # ==============================
 # ⚙️ CONFIGURACIÓN BÁSICA
