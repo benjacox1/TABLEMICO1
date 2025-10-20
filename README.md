@@ -30,13 +30,22 @@ Copia `.env.example` a `.env` y ajusta valores:
 - EMAIL_* (credenciales SMTP si querés enviar correos)
 
 ## Despliegue (Render.com)
-1. Subí el repo a GitHub.
-2. En Render, crea un nuevo servicio Web desde el repo.
-3. Aceptá los comandos por defecto de `render.yaml`.
-4. Configurá variables de entorno: DJANGO_SECRET_KEY, DJANGO_ALLOWED_HOSTS y (opcional) DATABASE_URL.
+Botón de despliegue:
 
-Render ejecutará:
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
+Pasos rápidos:
+1. Haz clic en el botón “Deploy to Render”.
+2. Selecciona tu repo (benjacox1/TABLEMICO1) y confirma.
+3. Variables de entorno sugeridas:
+   - DJANGO_DEBUG=False
+   - DJANGO_ALLOWED_HOSTS=tu-servicio.onrender.com
+   - DJANGO_SECRET_KEY=(autogenerada)
+   - DATABASE_URL=(opcional si usás Postgres gestionado)
+
+Con `render.yaml`, Render ejecutará:
 - pip install -r requirements.txt
+- python manage.py migrate
 - python manage.py collectstatic --noinput
 - gunicorn Tablemico1.wsgi:application
 

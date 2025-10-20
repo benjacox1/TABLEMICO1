@@ -3,7 +3,7 @@ services:
     name: tablemico
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt; python manage.py collectstatic --noinput
+    buildCommand: pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput
     startCommand: gunicorn Tablemico1.wsgi:application --log-file -
     envVars:
       - key: DJANGO_DEBUG
@@ -12,6 +12,10 @@ services:
         value: tablemico.onrender.com
       - key: DJANGO_SECRET_KEY
         generateValue: true
+      - key: PYTHONUNBUFFERED
+        value: '1'
+      - key: PYTHONPATH
+        value: '.'
       # Optional: Use a managed Postgres DB and set DATABASE_URL automatically
       # - key: DATABASE_URL
       #   fromDatabase:
