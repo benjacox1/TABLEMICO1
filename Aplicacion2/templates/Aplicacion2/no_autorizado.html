@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Acceso restringido - Tablemico{% endblock %}
+
+{% block content %}
+
+<section class="container my-5 d-flex justify-content-center">
+  <div class="card shadow-lg border-0 p-5 text-center rounded-4" role="alert" aria-labelledby="acceso-restringido-titulo">
+    <div class="card-body">
+
+```
+  <!-- Ícono de advertencia -->
+  <div class="mb-4">
+    <i class="bi bi-shield-lock-fill text-danger display-1 animate-bounce" aria-hidden="true"></i>
+  </div>
+
+  <!-- Título -->
+  <h1 id="acceso-restringido-titulo" class="text-danger fw-bold mb-3">
+    Acceso restringido
+  </h1>
+
+  <!-- Mensaje -->
+  <p class="lead text-secondary mb-4">
+    Esta sección está limitada a <strong>tutores</strong> o personas <strong>mayores de 18 años</strong>.<br>
+    Si crees que esto es un error, por favor vuelve al inicio.
+  </p>
+
+  <!-- Botón de retorno -->
+  <a href="{% url 'Aplicacion2:inicio' %}"
+     class="btn btn-primary btn-lg px-4 shadow-sm transition-all"
+     aria-label="Volver al inicio">
+    <i class="bi bi-house-door me-2"></i> Volver al inicio
+  </a>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- Estilos adicionales -->
+
+<style>
+  .animate-bounce {
+    animation: bounce 1.5s infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .transition-all {
+    transition: all 0.2s ease-in-out;
+  }
+  .transition-all:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+  }
+</style>
+
+{% endblock %}

@@ -1,0 +1,1 @@
+web: gunicorn Tablemico1.wsgi:application --log-file -

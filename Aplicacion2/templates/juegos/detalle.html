@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>{{ juego.titulo }}</h2>
+<p>{{ juego.descripcion }}</p>
+
+{% if juego.imagen %}
+  <img src="{{ juego.imagen.url }}" alt="{{ juego.titulo }}" class="img-fluid mb-3">
+{% endif %}
+
+<iframe src="{% static 'juegos/'|add:juego.archivo_html|add:'/index.html' %}" width="100%" height="600" frameborder="0"></iframe>
+{% endblock %}

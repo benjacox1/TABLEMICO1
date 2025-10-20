@@ -1,0 +1,22 @@
+{% extends "Aplicacion2/../../base.html" %}
+{% block title %}{{ producto.nombre }} - Tablemico{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    {% if producto.imagen %}
+      <img src="{{ producto.imagen.url }}" class="img-fluid" alt="{{ producto.nombre }}">
+    {% else %}
+  <div class="glass d-flex align-items-center justify-content-center" style="height:300px;">Sin imagen</div>
+    {% endif %}
+  </div>
+  <div class="col-md-6">
+    <h1>{{ producto.nombre }}</h1>
+    <p class="lead">${{ producto.precio }}</p>
+    <p>{{ producto.descripcion|linebreaks }}</p>
+    <p>Stock: {{ producto.stock }}</p>
+    <p>Categoría: <a href="{% url 'tienda:categoria_detail' producto.categoria.pk %}">{{ producto.categoria.nombre }}</a></p>
+    <!-- aquí podrías añadir "Agregar al carrito" -->
+  </div>
+</div>
+{% endblock %}

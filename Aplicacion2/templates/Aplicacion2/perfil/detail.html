@@ -1,0 +1,24 @@
+{% extends "Aplicacion2/../../base.html" %}
+{% block title %}Mi perfil - Tablemico{% endblock %}
+{% block content %}
+<h1>Perfil de {{ perfil.user.username }}</h1>
+<p>Correo: {{ perfil.user.email }}</p>
+<p>Fecha de nacimiento: {{ perfil.fecha_nacimiento }}</p>
+<p>Rol: {% if perfil.es_propietario %}Propietario{% else %}Padre{% endif %}</p>
+
+<hr>
+<h3>Progresos</h3>
+<ul class="list-group">
+  {% for prog in progresos %}
+    <li class="list-group-item d-flex justify-content-between">
+      <div>
+        <strong>{{ prog.juego.titulo }}</strong><br />
+        Puntaje: {{ prog.puntaje }}
+      </div>
+      <small>{{ prog.fecha|date:"SHORT_DATETIME_FORMAT" }}</small>
+    </li>
+  {% empty %}
+    <li class="list-group-item">Sin progresos todavía.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

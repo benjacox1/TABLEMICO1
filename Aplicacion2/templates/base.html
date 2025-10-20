@@ -1,0 +1,318 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <meta name="description" content="Plataforma interactiva de juegos didácticos e inclusivos para niños con autismo.">
+  <meta name="author" content="Juegos Didácticos">
+  <meta name="keywords" content="juegos, didácticos, autismo, aprendizaje, inclusión, niños, terapia ocupacional">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0d6efd">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Juegos Didácticos - Aprendizaje Inclusivo">
+  <meta property="og:description" content="Descubre juegos y actividades para el desarrollo motriz y cognitivo de niños.">
+  <meta property="og:image" content="{% static 'img/og-image.png' %}">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+
+  <!-- Título dinámico -->
+  <title>{% block title %}Juegos Didácticos{% endblock %}</title>
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos principales -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="text-dark">
+
+  <!-- =========================
+       NAVBAR FIJA
+  ========================= -->
+  <header class="site-header fixed-top shadow-sm" role="banner">
+    <nav class="navbar navbar-expand-lg navbar-light py-3" aria-label="Barra de navegación principal">
+      <div class="container">
+        <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="{% url 'Aplicacion2:inicio' %}">
+          <i class="bi bi-controller me-2"></i> Juegos Didácticos
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Abrir menú de navegación">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse menu" id="navbarNav">
+          <ul class="navbar-nav ms-auto fw-semibold">
+            <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'inicio' %}active{% endif %}" href="{% url 'Aplicacion2:inicio' %}">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'juegos' %}active{% endif %}" href="{% url 'Aplicacion2:juegos' %}">Juegos</a></li>
+            <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'recursos' %}active{% endif %}" href="{% url 'Aplicacion2:recursos' %}">Recursos</a></li>
+            <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'contacto' %}active{% endif %}" href="{% url 'Aplicacion2:contacto' %}">Contacto</a></li>
+
+            {% if user.is_authenticated and user.is_superuser %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'Aplicacion2:consultas_propietario' %}">Consultas</a></li>
+            {% endif %}
+
+            {% if user.is_authenticated %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'Aplicacion2:progreso' %}">Mi Progreso</a></li>
+              {% if user.perfil.es_propietario %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'Aplicacion2:gestion_juegos' %}">Gestionar Juegos</a></li>
+              {% endif %}
+              <li class="nav-item"><a class="nav-link text-danger" href="{% url 'Aplicacion2:salir' %}">Salir ({{ user.username }})</a></li>
+            {% else %}
+              <li class="nav-item"><a class="nav-link" href="{% url 'Aplicacion2:registro_padre' %}">Registrarse</a></li>
+              <li class="nav-item"><a class="nav-link" href="{% url 'Aplicacion2:login' %}">Ingresar</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Espaciado para navbar fija -->
+  <div style="height: 80px;"></div>
+
+  <!-- =========================
+       MENSAJES
+  ========================= -->
+  <section class="container mt-3" aria-live="polite">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm animate__animated animate__fadeInDown" role="alert">
+          {% if message.tags == "success" %}
+            <i class="bi bi-check-circle-fill me-2"></i>
+          {% elif message.tags == "error" %}
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+          {% else %}
+            <i class="bi bi-info-circle-fill me-2"></i>
+          {% endif %}
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar mensaje"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </section>
+
+  <!-- =========================
+       CONTENIDO PRINCIPAL
+  ========================= -->
+  <main class="container py-4" role="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- =========================
+       REPRODUCTOR DE MÚSICA DE FONDO
+  ========================= -->
+  <audio id="background-music" loop preload="auto" data-turbo-permanent>
+    <source src="{% url 'Aplicacion2:audio_relax' %}" type="audio/mpeg">
+  </audio>
+
+  <!-- =========================
+       CONTROLES DE MÚSICA
+  ========================= -->
+  <div id="music-controls" class="position-fixed top-0 end-0 m-3 p-3 rounded shadow-lg glass" style="z-index: 1050;" data-turbo-permanent>
+    <div class="d-flex flex-column align-items-center gap-2">
+      <button id="play-pause-btn" class="btn btn-primary rounded-circle" aria-label="Reproducir/Pausar música">
+        🎵
+      </button>
+      <input id="volume-control" type="range" min="0" max="1" step="0.1" value="0.3" class="form-range" style="width: 80px;" aria-label="Control de volumen">
+      <button id="mute-btn" class="btn btn-outline-secondary btn-sm rounded-circle" aria-label="Silenciar">
+        🔊
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================
+       BOTONES DE ACCESIBILIDAD
+  ========================= -->
+  <button id="toggle-accessible" class="btn btn-warning position-fixed bottom-0 start-0 m-3 shadow-lg rounded-circle"
+          aria-label="Alternar fuente accesible" aria-pressed="false">
+    🅰️
+  </button>
+
+  <button id="toggle-contrast" class="btn btn-dark position-fixed bottom-0 end-0 m-3 shadow-lg rounded-circle"
+          aria-label="Alternar alto contraste" aria-pressed="false">
+    🌙
+  </button>
+
+  <!-- =========================
+       BOTÓN VOLVER ARRIBA
+  ========================= -->
+  <button id="backToTop" class="back-to-top btn btn-primary shadow-lg rounded-circle" aria-label="Volver arriba">↑</button>
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+  <footer class="text-center py-4 mt-5 shadow-sm border-top glass" role="contentinfo">
+    <small class="text-muted">&copy; {% now "Y" %} Juegos Didácticos — Todos los derechos reservados</small>
+  </footer>
+
+  <!-- =========================
+       SCRIPTS
+  ========================= -->
+  <script src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@8.0.4/dist/turbo.es2017-umd.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+  <script src="{% static 'js/base.js' %}" defer></script>
+
+  <script>
+    function initTablemico() {
+      const toggleAccessible = document.getElementById("toggle-accessible");
+      const toggleContrast = document.getElementById("toggle-contrast");
+      const backToTop = document.getElementById("backToTop");
+      const header = document.querySelector(".site-header");
+
+      // === CONTROLES DE MÚSICA ===
+      const bgMusic = document.getElementById("background-music");
+      const playPauseBtn = document.getElementById("play-pause-btn");
+      const volumeControl = document.getElementById("volume-control");
+      const muteBtn = document.getElementById("mute-btn");
+      
+      let isPlaying = !bgMusic.paused;
+      let isMuted = bgMusic.volume === 0;
+      
+      // Configurar volumen inicial
+      if (localStorage.getItem("music-volume") == null) {
+        bgMusic.volume = 0.3;
+      }
+      
+      // Evitar múltiples binds sobre elementos permanentes
+      if (playPauseBtn && !playPauseBtn.dataset.bound) {
+        playPauseBtn.addEventListener("click", () => {
+          if (isPlaying) {
+            bgMusic.pause();
+            playPauseBtn.textContent = "🎵";
+            playPauseBtn.setAttribute("aria-label", "Reproducir música");
+          } else {
+            bgMusic.play().catch(console.log);
+            playPauseBtn.textContent = "⏸️";
+            playPauseBtn.setAttribute("aria-label", "Pausar música");
+          }
+          isPlaying = !isPlaying;
+        });
+        playPauseBtn.dataset.bound = "1";
+      }
+      
+      if (volumeControl && !volumeControl.dataset.bound) {
+        volumeControl.addEventListener("input", (e) => {
+          const val = parseFloat(e.target.value);
+          bgMusic.volume = val;
+          localStorage.setItem("music-volume", e.target.value);
+        });
+        volumeControl.dataset.bound = "1";
+      }
+      
+      if (muteBtn && !muteBtn.dataset.bound) {
+        muteBtn.addEventListener("click", () => {
+          if (isMuted) {
+            bgMusic.volume = volumeControl.value;
+            muteBtn.textContent = "🔊";
+            muteBtn.setAttribute("aria-label", "Silenciar");
+          } else {
+            bgMusic.volume = 0;
+            muteBtn.textContent = "🔇";
+            muteBtn.setAttribute("aria-label", "Activar sonido");
+          }
+          isMuted = !isMuted;
+        });
+        muteBtn.dataset.bound = "1";
+      }
+      
+      // Guardar/cargar preferencias
+      const savedVolume = localStorage.getItem("music-volume");
+      if (savedVolume) {
+        volumeControl.value = savedVolume;
+        bgMusic.volume = parseFloat(savedVolume);
+      }
+
+      // Sincronizar UI del botón según estado actual
+      if (!bgMusic.paused) {
+        playPauseBtn.textContent = "⏸️";
+        playPauseBtn.setAttribute("aria-label", "Pausar música");
+      } else {
+        playPauseBtn.textContent = "🎵";
+        playPauseBtn.setAttribute("aria-label", "Reproducir música");
+      }
+
+      // Autoplay tras la primera interacción del usuario (si no está en mute)
+      const desiredVolume = typeof savedVolume === 'string' ? parseFloat(savedVolume) : bgMusic.volume;
+      if (!window.__tablemicoMusicStarted && !window.__tablemicoAutoStartBound && desiredVolume > 0) {
+        const tryStart = () => {
+          if (!bgMusic.paused) {
+            window.__tablemicoMusicStarted = true;
+            cleanup();
+            return;
+          }
+          bgMusic.play().then(() => {
+            window.__tablemicoMusicStarted = true;
+            isPlaying = true;
+            playPauseBtn.textContent = "⏸️";
+            playPauseBtn.setAttribute("aria-label", "Pausar música");
+            cleanup();
+          }).catch(() => {
+            // si falla, dejamos los controles para que el usuario lo inicie manualmente
+          });
+        };
+        const onKey = (e) => {
+          if (e.key === 'Enter' || e.key === ' ') tryStart();
+        };
+        const cleanup = () => {
+          window.removeEventListener('pointerdown', tryStart, true);
+          window.removeEventListener('keydown', onKey, true);
+        };
+        window.addEventListener('pointerdown', tryStart, { capture: true, once: true });
+        window.addEventListener('keydown', onKey, { capture: true, once: true });
+        window.__tablemicoAutoStartBound = true;
+      }
+
+      // Cargar estado guardado
+      if (localStorage.getItem("accessible-font") === "true") document.body.classList.add("accessible-font");
+      if (localStorage.getItem("high-contrast") === "true") document.body.classList.add("high-contrast");
+
+      // Accesibilidad
+      toggleAccessible.addEventListener("click", () => {
+        const active = document.body.classList.toggle("accessible-font");
+        localStorage.setItem("accessible-font", active);
+        toggleAccessible.setAttribute("aria-pressed", active);
+      });
+
+      toggleContrast.addEventListener("click", () => {
+        const active = document.body.classList.toggle("high-contrast");
+        localStorage.setItem("high-contrast", active);
+        toggleContrast.setAttribute("aria-pressed", active);
+      });
+
+      // Navbar y scroll (evitar listeners duplicados)
+      if (!window.__tablemicoScrollBound) {
+        window.addEventListener("scroll", () => {
+          const hdr = document.querySelector(".site-header");
+          const btt = document.getElementById("backToTop");
+          if (hdr) hdr.classList.toggle("scrolled", window.scrollY > 50);
+          if (btt) btt.classList.toggle("visible", window.scrollY > 200);
+        }, { passive: true });
+        window.__tablemicoScrollBound = true;
+      }
+
+      // Volver arriba
+      if (backToTop && !backToTop.dataset.bound) {
+        backToTop.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+        backToTop.dataset.bound = "1";
+      }
+    }
+
+    document.addEventListener("turbo:load", initTablemico);
+    document.addEventListener("DOMContentLoaded", initTablemico);
+  </script>
+</body>
+</html>

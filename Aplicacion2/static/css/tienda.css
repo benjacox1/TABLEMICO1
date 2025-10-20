@@ -1,0 +1,34 @@
+.tienda-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 15px;
+}
+
+.tienda-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.tienda-img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.cart {
+  bottom: 2rem;
+  right: 2rem;
+  width: 260px;
+  display: none;
+}
+
+.cart.visible {
+  display: block;
+}
+
+button.add-to-cart {
+  background: linear-gradient(45deg, #7b2ff7, #f107a3);
+  border: none;
+}
+
+button.add-to-cart:hover {
+  opacity: 0.9;
+}

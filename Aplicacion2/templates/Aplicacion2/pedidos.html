@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Mis Pedidos{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+  <h1 class="mb-4 text-center fw-bold">📦 Mis Pedidos</h1>
+
+{% if pedidos %} <div class="accordion" id="accordionPedidos">
+{% for pedido in pedidos %} <div class="accordion-item mb-3 shadow-sm rounded-3 overflow-hidden"> <h2 class="accordion-header" id="heading{{ pedido.id }}"> <button class="accordion-button collapsed d-flex justify-content-between align-items-center"
+               type="button" data-bs-toggle="collapse"
+               data-bs-target="#collapse{{ pedido.id }}"
+               aria-expanded="false" aria-controls="collapse{{ pedido.id }}"> <span> <i class="bi bi-receipt me-2"></i> Pedido #{{ pedido.id }} <small class="text-muted">({{ pedido.fecha|date:"d/m/Y H:i" }})</small> </span> <span class="ms-3 badge
+           {% if pedido.estado == 'pendiente' %}bg-warning text-dark
+           {% elif pedido.estado == 'enviado' %}bg-info text-dark
+           {% elif pedido.estado == 'entregado' %}bg-success
+           {% else %}bg-secondary{% endif %}"> <i class="bi bi-circle-fill me-1"></i> {{ pedido.estado|title }} </span> </button> </h2> <div id="collapse{{ pedido.id }}"
+          class="accordion-collapse collapse"
+          aria-labelledby="heading{{ pedido.id }}"
+          data-bs-parent="#accordionPedidos"> <div class="accordion-body"> <!-- Detalles del pedido --> <h5 class="fw-bold mb-3"><i class="bi bi-box-seam"></i> Detalles del pedido</h5> <ul class="list-group mb-3">
+{% for detalle in pedido.detalles.all %} <li class="list-group-item d-flex justify-content-between align-items-center"> <div> <strong>{{ detalle.producto.nombre }}</strong><br> <small class="text-muted">Cantidad: {{ detalle.cantidad }}</small> </div> <span class="fw-bold text-success">💲{{ detalle.subtotal }}</span> </li>
+{% endfor %} </ul> <p class="fw-bold text-end fs-5">💰 Total: ${{ pedido.total }}</p> </div> </div> </div>
+{% endfor %} </div>
+{% else %} <div class="alert alert-info text-center rounded-3 shadow-sm p-4"> <i class="bi bi-bag-x fs-3 d-block mb-2"></i>
+Aún no tienes pedidos realizados. </div>
+{% endif %}
+
+</div>
+{% endblock %}

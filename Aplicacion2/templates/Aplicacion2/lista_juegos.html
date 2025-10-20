@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>🎮 Juegos Disponibles</h1>
+<div class="juegos-grid">
+  {% for juego in juegos %}
+    <div class="juego-card">
+      <h2>{{ juego.nombre }}</h2>
+      <p>{{ juego.descripcion }}</p>
+      <a href="{{ juego.url }}" target="_blank" class="btn btn-primary">Jugar ahora</a>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

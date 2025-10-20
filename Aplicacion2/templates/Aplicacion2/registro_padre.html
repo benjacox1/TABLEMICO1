@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Registro de Padre - Juegos Didácticos{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+
+      <!-- Encabezado -->
+      <header class="text-center mb-4">
+        <h1 id="registro-padre-title" class="fw-bold h3">👨‍👩‍👧 Registro de Padre</h1>
+        <p class="text-muted">
+          Crea tu cuenta y acompaña el progreso de tus hijos en los juegos didácticos.
+        </p>
+      </header>
+
+      <!-- Mensajes de error -->
+      {% if form.errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" aria-live="assertive">
+          <h2 class="h6 fw-bold">⚠️ Corrige los siguientes errores:</h2>
+          <ul class="mt-2 mb-0 ps-3">
+            {% for field in form %}
+              {% for error in field.errors %}
+                <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+      {% endif %}
+
+      <!-- Formulario -->
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+          <form method="POST" action="{% url 'Aplicacion2:registro_padre' %}">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label fw-semibold">
+                  {{ field.label }}
+                </label>
+                {{ field|add_class:"form-control rounded-3 shadow-sm" }}
+                {% if field.help_text %}
+                  <div class="form-text text-muted small">{{ field.help_text }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-primary w-100 py-2 rounded-pill shadow-sm fw-semibold mt-3">
+              ✅ Crear cuenta
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Enlace a login -->
+      <div class="text-center mt-4">
+        <p class="mb-0">
+          ¿Ya tienes cuenta?
+          <a href="{% url 'Aplicacion2:login' %}" class="fw-semibold text-decoration-none link-primary">
+            Inicia sesión aquí
+          </a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

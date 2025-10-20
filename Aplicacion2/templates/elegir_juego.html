@@ -1,0 +1,13 @@
+{% extends "Aplicacion2/base.html" %}
+
+{% block content %}
+<h2>Elegí un juego</h2>
+<div class="grid grid-cols-2 gap-4">
+  {% for juego in juegos %}
+    <div class="card">
+      <h3>{{ juego.nombre }}</h3>
+      <a href="{% url 'Aplicacion2:detalle_juego' juego.slug %}" class="btn btn-primary">Jugar</a>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

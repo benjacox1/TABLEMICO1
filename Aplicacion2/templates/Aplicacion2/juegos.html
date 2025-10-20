@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}🎮 Juegos Didácticos - Tablemico{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+  <!-- 🧩 Encabezado -->
+  <div class="text-center mb-5">
+    <h1 class="fw-bold display-5 text-primary">🎲 Juegos Didácticos</h1>
+    <p class="lead text-muted">
+      Aprende jugando con nuestra selección de juegos educativos e interactivos.
+    </p>
+  </div>
+
+  <!-- 🔍 Filtros de búsqueda -->
+  <form method="get" class="row mb-4 g-2 align-items-center">
+    <div class="col-md-6 d-flex">
+      <input
+        type="text"
+        name="q"
+        class="form-control shadow-sm"
+        placeholder="🔍 Buscar un juego..."
+        value="{{ request.GET.q }}">
+    </div>
+
+    {% if categorias %}
+      <div class="col-md-4">
+        <select class="form-select shadow-sm" name="categoria" onchange="this.form.submit()">
+          <option value="">Todas las categorías</option>
+          {% for categoria in categorias %}
+            <option value="{{ categoria.id }}" {% if request.GET.categoria == categoria.id|stringformat:"s" %}selected{% endif %}>
+              {{ categoria.nombre }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+    {% endif %}
+
+    <div class="col-md-2 text-md-end">
+      <button class="btn btn-primary w-100 shadow-sm">
+        <i class="bi bi-search"></i> Buscar
+      </button>
+    </div>
+  </form>
+
+  <!-- 🎮 Lista de juegos -->
+  <div class="row g-4">
+    {% for juego in juegos %}
+      <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="game-card shadow-sm border-0 rounded-4 overflow-hidden position-relative">
+
+          <!-- 🏷️ Etiqueta de categoría -->
+          {% if juego.categoria %}
+            <span class="badge bg-primary position-absolute top-0 start-0 m-2 px-3 py-2 shadow">
+              {{ juego.categoria.nombre }}
+            </span>
+          {% endif %}
+
+          <!-- 🖼 Imagen -->
+          {% if juego.imagen %}
+            {% if juego.imagen|slice:":8" == "/static/" %}
+              <img src="{{ juego.imagen }}" alt="{{ juego.titulo }}" class="game-img">
+            {% else %}
+              <img src="{% static juego.imagen %}" alt="{{ juego.titulo }}" class="game-img">
+            {% endif %}
+          {% else %}
+            <img src="{% static 'img/juegos/default_game.jpg' %}" alt="Juego sin imagen" class="game-img">
+          {% endif %}
+
+          <!-- 📋 Contenido -->
+          <div class="p-3 text-center">
+            <h5 class="fw-bold text-primary mb-2">{{ juego.titulo|default_if_none:"Juego sin título" }}</h5>
+            <p class="text-muted small">{{ juego.descripcion|truncatewords:15|default:"Sin descripción disponible." }}</p>
+
+            <!-- ⭐ Calificación o etiqueta -->
+            <div class="d-flex justify-content-center gap-1 mb-3">
+              <i class="bi bi-star-fill text-warning"></i>
+              <i class="bi bi-star-fill text-warning"></i>
+              <i class="bi bi-star-fill text-warning"></i>
+              <i class="bi bi-star-half text-warning"></i>
+              <i class="bi bi-star text-warning"></i>
+            </div>
+
+            <!-- 🎮 Botón -->
+            {% if juego.carpeta %}
+              <a href="{% url 'Aplicacion2:ver_juego' juego.carpeta %}" class="btn btn-outline-primary w-75 play-btn">
+                <i class="bi bi-play-circle"></i> Jugar
+              </a>
+            {% elif juego.url %}
+              <a href="{{ juego.url }}" target="_blank" class="btn btn-success w-75 play-btn">
+                <i class="bi bi-controller"></i> Ir al juego
+              </a>
+            {% else %}
+              <button class="btn btn-secondary w-75" disabled>
+                <i class="bi bi-lock"></i> No disponible
+              </button>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12 text-center">
+        <div class="alert alert-secondary rounded-3 shadow-sm py-4">
+          <i class="bi bi-emoji-frown"></i> No se encontraron juegos disponibles.
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- 🎨 Enlace a estilos personalizados -->
+<link rel="stylesheet" href="{% static 'css/juegos.css' %}">
+
+<!-- ⚙️ Enlace a scripts interactivos -->
+<script src="{% static 'js/juegos.js' %}"></script>
+
+{% endblock %}

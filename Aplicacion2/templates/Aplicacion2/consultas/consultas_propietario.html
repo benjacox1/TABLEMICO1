@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">Consultas Recibidas</h1>
+
+    {% if consultas %}
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Teléfono</th>
+                    <th>Asunto</th>
+                    <th>Mensaje</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for consulta in consultas %}
+                <tr>
+                    <td>{{ consulta.nombre }}</td>
+                    <td>{{ consulta.email }}</td>
+                    <td>{{ consulta.telefono }}</td>
+                    <td>{{ consulta.asunto }}</td>
+                    <td>{{ consulta.mensaje }}</td>
+                    <td>{{ consulta.fecha|date:"d/m/Y H:i" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No hay consultas por el momento.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,98 @@
+#site-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#site-name img {
+  height: 80px;   /* más grande */
+}
+
+#site-name span {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #f0f0f0; /* color claro sobre fondo oscuro */
+}
+
+
+body.login {
+  background: #cd0b0b; /* Fondo oscuro */
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  background: #1e1e1e;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  width: 350px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.login-header img.logo {
+  max-width: 70px;
+  margin-bottom: 0.5rem;
+}
+
+.login-header h2 {
+  font-size: 1.2rem;
+  color: #f0f0f0;
+}
+
+.login-header h2 span {
+  color: #ffdd57; /* Amarillo corporativo */
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  color: #ddd;
+  font-weight: 500;
+}
+
+#id_username,
+#id_password {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #2a2a2a;
+  color: #fff;
+}
+
+.btn-login {
+  width: 100%;
+  padding: 0.7rem;
+  background: #09e892;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-login:hover {
+  background: #07c178;
+}
+body, .module { font-family: 'Poppins', sans-serif; }
+.brand { display:flex; align-items:center; gap:12px; }
+.brand-logo { height:64px; }
+.brand-title { color:#ffd24d; font-size:1.6rem; font-weight:700; }
+#header { background:#2b5f73; }

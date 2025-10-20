@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎵 Escucha y Toca</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎧 Escucha y Toca</h1>
+      <span id="score">Puntos: 0</span>
+    </header>
+
+    <main class="game-panel">
+      <section class="left-panel">
+        <button id="play-sound" class="play-btn">🔊 Escuchar sonido</button>
+        <p class="hint">Escucha el sonido y toca la imagen correcta</p>
+      </section>
+
+      <section class="right-panel">
+        <div class="grid">
+          <div class="card" data-sound="dog">
+            <img src="images/dog.png" alt="Perro">
+          </div>
+          <div class="card" data-sound="car">
+            <img src="images/car.png" alt="Auto">
+          </div>
+          <div class="card" data-sound="drum">
+            <img src="images/drum.png" alt="Tambor">
+          </div>
+          <div class="card" data-sound="bell">
+            <img src="images/bell.png" alt="Campana">
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p id="message">🎵 ¡Presiona “Escuchar sonido” para empezar!</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

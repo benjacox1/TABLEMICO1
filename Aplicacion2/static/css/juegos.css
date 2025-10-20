@@ -1,0 +1,149 @@
+/* 🎨 Fondo general */
+body {
+  background: linear-gradient(180deg, #ef1717 0%, #eef3f8 100%);
+  font-family: 'Poppins', sans-serif;
+  color: #212529;
+}
+
+/* 🧩 Tarjeta de juego */
+.game-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* ✨ Efecto hover */
+.game-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25);
+}
+
+/* 🖼 Imagen */
+.game-img {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+/* Zoom + oscurecer en hover */
+.game-card:hover .game-img {
+  transform: scale(1.08);
+  filter: brightness(0.85);
+}
+
+/* 📋 Contenido */
+.game-card .p-3 {
+  background-color: #fff;
+  padding-top: 1rem !important;
+  padding-bottom: 1.25rem !important;
+  border-top: 1px solid #f2f2f2;
+}
+
+/* 🕹️ Botón */
+.play-btn {
+  border-radius: 12px;
+  transition: all 0.25s ease-in-out;
+  font-weight: 600;
+}
+
+.play-btn:hover {
+  transform: scale(1.07);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+/* ⭐ Calificación */
+.text-warning {
+  filter: drop-shadow(0 0 2px rgba(255, 215, 0, 0.6));
+}
+
+/* 🏷️ Etiqueta de categoría */
+.badge {
+  font-size: 0.75rem;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ef1717, #ff5f5f);
+  color: #fff;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* 🎲 Animación de entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.game-card {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+/* 🎮 Efecto en secuencia (aparición progresiva) */
+.game-card:nth-child(1) { animation-delay: 0.1s; }
+.game-card:nth-child(2) { animation-delay: 0.2s; }
+.game-card:nth-child(3) { animation-delay: 0.3s; }
+.game-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* ✨ Responsive */
+@media (max-width: 768px) {
+  .game-img {
+    height: 160px;
+  }
+  .game-card {
+    border-radius: 12px;
+  }
+}
+/* ❤️ Botón de favoritos */
+.fav-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, background 0.2s ease;
+  z-index: 2;
+}
+
+.fav-btn:hover {
+  background: #fff;
+  transform: scale(1.1);
+}
+
+.fav-btn i {
+  font-size: 1.1rem;
+  color: #e74c3c;
+}
+
+.fav-btn.active i {
+  color: #ef1717;
+}
+
+/* ✨ Aparición en scroll */
+.game-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.game-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

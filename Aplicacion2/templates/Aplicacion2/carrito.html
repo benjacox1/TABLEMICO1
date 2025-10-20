@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Carrito de Compras - Tablemico{% endblock %}
+
+{% block content %}
+<section class="container my-5" aria-labelledby="carrito-titulo">
+  <!-- Encabezado -->
+  <div class="text-center mb-5">
+    <h1 id="carrito-titulo" class="fw-bold">
+      🛒 Carrito de Compras
+    </h1>
+    <p class="lead">
+      Revisa los productos que seleccionaste antes de confirmar tu pedido.
+    </p>
+  </div>
+
+  <!-- Tabla de productos en carrito -->
+  <div class="table-responsive shadow rounded">
+    <table class="table align-middle">
+      <thead class="table-primary">
+        <tr>
+          <th scope="col">Producto</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Subtotal</th>
+          <th scope="col" class="text-center">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if carrito %}
+          {% for item in carrito %}
+          <tr>
+            <td>
+              <div class="d-flex align-items-center">
+                {% if item.producto.imagen %}
+                  <img src="{{ item.producto.imagen.url }}" alt="Imagen de {{ item.producto.nombre }}"
+                       class="img-thumbnail me-3" style="width: 70px; height: 70px; object-fit: cover;">
+                {% endif %}
+                <span class="fw-semibold">{{ item.producto.nombre }}</span>
+              </div>
+            </td>
+            <td>${{ item.producto.precio }}</td>
+            <td>
+              <form action="{% url 'Aplicacion2:carrito' %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <input type="number" name="cantidad" value="{{ item.cantidad }}" min="1" class="form-control d-inline-block w-auto">
+                <input type="hidden" name="producto_id" value="{{ item.producto.id }}">
+                <button type="submit" class="btn btn-sm btn-outline-success ms-2" aria-label="Actualizar cantidad">
+                  <i class="bi bi-arrow-repeat"></i>
+                </button>
+              </form>
+            </td>
+            <td>${{ item.subtotal }}</td>
+            <td class="text-center">
+              <a href="{% url 'Aplicacion2:carrito' %}?eliminar={{ item.producto.id }}"
+                 class="btn btn-sm btn-outline-danger" aria-label="Eliminar {{ item.producto.nombre }}">
+                <i class="bi bi-trash"></i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="5" class="text-center py-4">
+              <div class="text-muted">
+                <i class="bi bi-cart-x display-6 d-block mb-2"></i>
+                Tu carrito está vacío.
+              </div>
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Resumen de compra -->
+  {% if carrito %}
+  <div class="card mt-4 shadow border-0">
+    <div class="card-body d-flex flex-column flex-md-row justify-content-between align-items-center">
+      <h4 class="fw-bold mb-3 mb-md-0">
+        Total: <span class="text-primary">${{ total }}</span>
+      </h4>
+      <div>
+        <a href="{% url 'Aplicacion2:productos' %}" class="btn btn-outline-secondary me-2">
+          <i class="bi bi-arrow-left"></i> Seguir comprando
+        </a>
+        <a href="{% url 'Aplicacion2:confirmar_pedido' %}" class="btn btn-success">
+          <i class="bi bi-check-circle"></i> Confirmar pedido
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

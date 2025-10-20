@@ -1,0 +1,26 @@
+{% extends "Aplicacion2/../../base.html" %}
+{% block title %}Pedido #{{ pedido.id }} - Tablemico{% endblock %}
+{% block content %}
+<h1>Pedido #{{ pedido.id }}</h1>
+<p>Usuario: {{ pedido.usuario.username }}</p>
+<p>Fecha: {{ pedido.fecha|date:"SHORT_DATETIME_FORMAT" }}</p>
+<p>Estado: <strong>{{ pedido.get_estado_display }}</strong></p>
+<hr>
+<h4>Artículos</h4>
+<table class="table">
+  <thead>
+    <tr><th>Producto</th><th>Cantidad</th><th>Precio unit.</th><th>Subtotal</th></tr>
+  </thead>
+  <tbody>
+    {% for d in detalles %}
+      <tr>
+        <td>{{ d.producto.nombre }}</td>
+        <td>{{ d.cantidad }}</td>
+        <td>${{ d.precio_unitario }}</td>
+        <td>${{ d.cantidad|multiply:d.precio_unitario }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p class="text-end"><strong>Total: ${{ pedido.total }}</strong></p>
+{% endblock %}

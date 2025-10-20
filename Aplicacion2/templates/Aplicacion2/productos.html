@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Productos - Tablemico{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+  <!-- Título principal -->
+  <h1 class="mb-4 text-center fw-bold">🛒 Lista de Productos</h1>
+
+{% if productos %} <div class="row g-4">
+{% for producto in productos %} <div class="col-md-6 col-lg-4"> <div class="card h-100 shadow-lg border-0 rounded-3"> <!-- Imagen opcional -->
+{% if producto.imagen %} <img src="{{ producto.imagen.url }}" class="card-img-top img-fluid" alt="Imagen de {{ producto.nombre }}">
+{% else %} <img src="{% static 'img/default-product.png' %}" class="card-img-top img-fluid" alt="Imagen no disponible">
+{% endif %}
+
+```
+        <div class="card-body d-flex flex-column">
+          <!-- Nombre -->
+          <h5 class="card-title text-primary fw-bold">{{ producto.nombre }}</h5>
+          <!-- Descripción -->
+          <p class="card-text text-muted small">
+            {{ producto.descripcion|default:"Sin descripción disponible" }}
+          </p>
+          <!-- Precio -->
+          <p class="mt-auto mb-2"><strong>Precio:</strong> ${{ producto.precio }}</p>
+          <!-- Botón acción -->
+          <a href="{% url 'Aplicacion2:detalle_producto' producto.id %}"
+             class="btn btn-outline-primary btn-sm w-100"
+             aria-label="Ver más sobre {{ producto.nombre }}">
+            <i class="bi bi-eye"></i> Ver Detalles
+          </a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+```
+
+{% else %} <!-- Mensaje sin productos --> <div class="alert alert-info text-center mt-5" role="alert"> <i class="bi bi-info-circle me-2"></i> No hay productos cargados todavía. </div>
+{% endif %}
+
+</div>
+{% endblock %}

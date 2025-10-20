@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contacto - Tablemico{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-gradient">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+
+      <!-- ================== FORMULARIO DE CONTACTO ================== -->
+      <div class="col-lg-7">
+  <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5 glass">
+          <h1 class="mb-3 fw-bold text-primary">
+            <i class="bi bi-envelope-fill me-2"></i> ¡Contáctanos!
+          </h1>
+          <p class="lead text-muted mb-4">
+            Somos estudiantes de la carrera de <strong>Tecnicatura Superior en Administración de Empresas y Desarrollo de Software</strong> de Tucumán.
+            Si tenés dudas, sugerencias o querés colaborar con nuestro proyecto educativo, completá el formulario y te responderemos a la brevedad.
+          </p>
+
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+              </div>
+            {% endfor %}
+          {% endif %}
+
+          <form method="post" novalidate aria-labelledby="contact-form-title">
+            {% csrf_token %}
+            <h2 id="contact-form-title" class="h5 visually-hidden">Formulario de contacto</h2>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="id_name" class="form-label fw-semibold">Nombre</label>
+                <input id="id_name" name="name" type="text" class="form-control" required placeholder="Tu nombre completo">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="id_email" class="form-label fw-semibold">Correo electrónico</label>
+                <input id="id_email" name="email" type="email" class="form-control" required placeholder="tu@ejemplo.com">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="id_subject" class="form-label fw-semibold">Asunto</label>
+              <input id="id_subject" name="subject" type="text" class="form-control" required placeholder="Breve resumen">
+            </div>
+
+            <div class="mb-3">
+              <label for="id_phone" class="form-label fw-semibold">Teléfono (opcional)</label>
+              <input id="id_phone" name="phone" type="tel" class="form-control" placeholder="+54 9 381 123 4567">
+            </div>
+
+            <div class="mb-3">
+              <label for="id_message" class="form-label fw-semibold">Mensaje</label>
+              <textarea id="id_message" name="message" class="form-control" rows="6" required placeholder="Contanos en detalle..."></textarea>
+            </div>
+
+            <div class="form-check mb-3">
+              <input id="id_privacy" name="privacy" type="checkbox" class="form-check-input" required>
+              <label for="id_privacy" class="form-check-label small text-muted">
+                Acepto que mis datos sean usados para responder a mi consulta
+                (ver <a href="{% url 'Aplicacion2:politica_privacidad' %}" target="_blank" rel="noopener">Política de Privacidad</a>).
+              </label>
+            </div>
+
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary px-4 shadow-sm">
+                <i class="bi bi-send-fill me-2"></i> Enviar
+              </button>
+              <button type="reset" class="btn btn-outline-secondary px-4">
+                <i class="bi bi-x-circle me-2"></i> Borrar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ================== INFO DE CONTACTO ================== -->
+      <aside class="col-lg-5">
+  <div class="card border-0 shadow-lg rounded-4 mb-4 glass p-4">
+          <h2 class="h5 fw-bold text-primary mb-3">Información de contacto</h2>
+          <ul class="list-unstyled mb-4">
+            <li class="mb-2">
+              <strong>Tablemico - Proyecto Educativo Tucumán</strong><br>
+              Santiago y Virgen de la Merced, San Miguel de Tucumán<br>
+              <small class="text-muted">Argentina</small><br>
+              <span>CUIT: <span class="text-monospace">30-12345678-9</span></span>
+            </li>
+            <li><i class="bi bi-telephone me-2 text-primary"></i><a href="tel:+5493811234567">+54 9 381 123 4567</a></li>
+            <li><i class="bi bi-envelope me-2 text-primary"></i><a href="mailto:info@tablemico.com">info@tablemico.com</a></li>
+            <li><i class="bi bi-clock me-2 text-primary"></i>Horario: Lun–Vie 9:00–18:00</li>
+          </ul>
+
+          <!-- 🗺️ Mapa actualizado de Tucumán -->
+          <div class="ratio ratio-16x9 mb-2">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3550.283821251464!2d-65.20636692494016!3d-26.832406591238497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94225c1ff9cbeef9%3A0x5487d5b94683e4f2!2sSantiago%20y%20Virgen%20de%20la%20Merced%2C%20San%20Miguel%20de%20Tucum%C3%A1n%2C%20Tucum%C3%A1n!5e0!3m2!1ses-419!2sar!4v1738738237465!5m2!1ses-419!2sar"
+              style="border:0;" allowfullscreen="" loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Ubicación de Tablemico en Tucumán"></iframe>
+          </div>
+          <small class="text-muted">📍 Hacé clic en el mapa para obtener indicaciones.</small>
+        </div>
+
+        <!-- Redes sociales -->
+        <div class="text-center">
+          <h3 class="h6 fw-bold mb-3 text-primary">Seguinos en redes</h3>
+          <div class="d-flex justify-content-center gap-3 fs-5">
+            <a href="https://www.facebook.com" class="text-primary" target="_blank"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com" class="text-danger" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.twitter.com" class="text-info" target="_blank"><i class="bi bi-twitter-x"></i></a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- 🎨 Estilos -->
+<style>
+  .bg-gradient {
+    background: linear-gradient(135deg, #e3f2fd 0%, #fefefe 100%);
+  }
+  .form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.15rem rgba(13,110,253,0.25);
+  }
+  .card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+  }
+</style>
+{% endblock %}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de No Salir de la Línea</title>
+    <link rel="stylesheet" href="estilo3.css">
+</head>
+<body>
+    <!-- Menú de inicio -->
+    <div id="menu-inicio" class="menu-container">
+        <h1>No Salir de la Línea</h1>
+        <p class="instructions">Sigue la línea desde el punto verde hasta el rojo sin salirte del corredor</p>
+        <div class="player-entry">
+            <label for="playerName">Tu nombre:</label>
+            <input id="playerName" type="text" maxlength="20" placeholder="Ingresa tu nombre" oninput="validarNombre()" />
+        </div>
+        <button id="btnComenzar" class="menu-btn" onclick="empezarConNombre()" disabled>Comenzar Juego</button>
+        <div id="puntaje-actual" class="current-score hidden">Puntaje: <span id="scoreValue">0</span></div>
+        <div class="ranking-container">
+            <h2>Ranking</h2>
+            <ul id="rankingLista" class="ranking-list"></ul>
+        </div>
+    </div>
+
+    <!-- Menú de dificultades -->
+    <div id="menu-dificultades" class="menu-container hidden">
+        <h1>Selecciona la Dificultad</h1>
+        <div class="difficulty-buttons">
+            <button class="difficulty-btn easy" onclick="seleccionarDificultad('facil')">
+                <span class="diff-title">FÁCIL</span>
+                <span class="diff-desc">Línea gruesa</span>
+            </button>
+            <button class="difficulty-btn medium" onclick="seleccionarDificultad('medio')">
+                <span class="diff-title">MEDIO</span>
+                <span class="diff-desc">Línea mediana</span>
+            </button>
+            <button class="difficulty-btn hard" onclick="seleccionarDificultad('dificil')">
+                <span class="diff-title">DIFÍCIL</span>
+                <span class="diff-desc">Línea delgada</span>
+            </button>
+        </div>
+        <button class="back-btn" onclick="volverInicio()">Volver</button>
+    </div>
+
+    <!-- Menú de figuras -->
+    <div id="menu-figuras" class="menu-container hidden">
+        <h1>Selecciona una Figura</h1>
+        <div class="shape-buttons">
+            <button class="shape-btn" onclick="seleccionarFigura('circulo')">
+                <div class="shape-preview circle"></div>
+                <span>CÍRCULO</span>
+            </button>
+            <button class="shape-btn" onclick="seleccionarFigura('cuadrado')">
+                <div class="shape-preview square"></div>
+                <span>CUADRADO</span>
+            </button>
+            <button class="shape-btn" onclick="seleccionarFigura('triangulo')">
+                <div class="shape-preview triangle"></div>
+                <span>TRIÁNGULO</span>
+            </button>
+        </div>
+        <button class="back-btn" onclick="volverDificultades()">Volver</button>
+    </div>
+
+    <!-- Área de juego -->
+    <div id="game-area" class="game-container hidden">
+        <div class="game-header">
+            <h2 id="game-title">Sigue la línea</h2>
+            <div class="game-info">
+                <span id="difficulty-display"></span> | <span id="shape-display"></span>
+            </div>
+        </div>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div class="game-controls">
+            <button class="control-btn" onclick="reiniciarJuego()">Reiniciar</button>
+            <button class="control-btn" onclick="volverFiguras()">Cambiar Figura</button>
+            <button class="control-btn" onclick="volverInicio()">Menú Principal</button>
+        </div>
+        <div id="game-status" class="game-status"></div>
+    </div>
+
+    <!-- Overlay Celebración -->
+    <div id="celebracion" class="celebracion hidden">
+        <div class="celebracion-contenido">
+            <div class="cartel-felicitaciones">
+                <h2>¡FELICITACIONES!</h2>
+                <p>Has completado la figura</p>
+            </div>
+            <div id="confetiContainer" class="confeti-container"></div>
+        </div>
+    </div>
+
+    <!-- Mensaje central gestionado ahora solo por #game-status -->
+
+    <!-- Efectos de mouse -->
+    <div class="mouse-trail" id="mouseTrail"></div>
+
+    <script src="script.js"></script>
+    <button id="btnResetRanking" class="reset-ranking-btn" onclick="intentarResetRanking()" title="Restablecer ranking">↺</button>
+</body>
+</html>

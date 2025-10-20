@@ -1,0 +1,80 @@
+/* =============================
+   ♿ ESTILOS DE ACCESIBILIDAD
+   ============================= */
+
+/* ======= Fuente disléxica ======= */
+body.accessible-font {
+  font-family: "OpenDyslexic", "Poppins", system-ui, sans-serif !important;
+}
+
+/* ======= Modo alto contraste ======= */
+body.high-contrast {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a1c4fd, #c2e9fb) !important;
+  background-size: 400% 400% !important;
+  animation: bgAnimation 15s ease infinite !important;
+  color: #fff !important;
+}
+
+body.high-contrast .welcome-subtitle {
+  background: #fff !important;
+  color: #000 !important;
+}
+
+body.high-contrast .enter-btn {
+  background: #fff !important;
+  color: #000 !important;
+  border: 2px solid #ffcc00 !important;
+}
+
+/* ======= Texto grande ======= */
+body.large-text {
+  font-size: 1.2em !important;
+  line-height: 1.8 !important;
+}
+
+/* ======= Texto más pequeño ======= */
+body.small-text {
+  font-size: 0.9em !important;
+}
+
+/* ======= Modo calmado ======= */
+body.calm-mode * {
+  animation: none !important;
+  transition: none !important;
+}
+
+body.calm-mode .balloon,
+body.calm-mode .stars {
+  display: none !important;
+}
+
+body.calm-mode .enter-btn {
+  background: #6c757d !important;
+  color: #fff !important;
+}
+
+/* ======= Reducción de movimiento (para usuarios con preferencia del sistema) ======= */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ======= Estados de foco ======= */
+:focus {
+  outline: 3px solid #ffcc00 !important;
+  outline-offset: 3px !important;
+}
+
+/* ======= Descripciones ocultas pero accesibles ======= */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  border: 0 !important;
+  padding: 0 !important;
+  clip: rect(0 0 0 0) !important;
+  overflow: hidden !important;
+}

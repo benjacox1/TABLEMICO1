@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Tienda Motriz - Juegos Didácticos{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/tienda.css' %}">
+
+<section class="container py-5">
+  <h1 class="text-center mb-5">🛒 Tienda Motriz</h1>
+
+  <div class="row g-4">
+    {% for producto in productos %}
+      <div class="col-md-3 col-sm-6">
+        <div class="card h-100 text-center border-0 shadow-lg tienda-card">
+          <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="card-img-top rounded-top tienda-img">
+          <div class="card-body">
+            <h5 class="fw-bold">{{ producto.nombre }}</h5>
+            <p class="text-muted small">{{ producto.descripcion|truncatewords:15 }}</p>
+            <p class="fw-bold text-success mb-3">$ {{ producto.precio }}</p>
+            <button class="btn btn-primary rounded-pill px-3 add-to-cart"
+                    data-name="{{ producto.nombre }}"
+                    data-price="{{ producto.precio }}">
+              🛍️ Agregar al carrito
+            </button>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-center text-muted">⚠️ No hay productos disponibles.</p>
+    {% endfor %}
+  </div>
+
+  <!-- 🧺 Carrito flotante -->
+  <div id="cart" class="cart shadow-lg p-3 rounded position-fixed glass">
+    <h5>🧺 Tu Carrito</h5>
+    <ul id="cart-items" class="list-unstyled small"></ul>
+    <p class="fw-bold mt-2">Total: $<span id="cart-total">0</span></p>
+    <button id="clear-cart" class="btn btn-danger btn-sm mt-2">Vaciar</button>
+  </div>
+</section>
+
+<script src="{% static 'js/tienda.js' %}"></script>
+{% endblock %}

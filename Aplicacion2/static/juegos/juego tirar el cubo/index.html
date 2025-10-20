@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Tirar Cubo</title>
+    <link rel="stylesheet" href="estilo4.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>¡Tira el Cubo Mágico!</h1>
+        <p class="instructions">Haz clic en cualquier parte de la pantalla para tirar el cubo</p>
+        
+        <div class="cube-area" id="cubeArea">
+            <div class="cube" id="cube">
+                <div class="face front" data-number="1">1</div>
+                <div class="face back" data-number="2">2</div>
+                <div class="face right" data-number="3">3</div>
+                <div class="face left" data-number="4">4</div>
+                <div class="face top" data-number="5">5</div>
+                <div class="face bottom" data-number="6">6</div>
+            </div>
+        </div>
+        
+        <div class="message" id="message">
+            <div class="result-header">
+                <span class="result-number" id="resultNumber">1</span>
+                <h2>¡Debes Responder!</h2>
+            </div>
+            <p id="question"></p>
+            <button id="playAgain" class="play-again-btn">Jugar de Nuevo</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

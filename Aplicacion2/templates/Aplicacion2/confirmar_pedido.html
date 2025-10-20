@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Confirmar Pedido - Tablemico{% endblock %}
+
+{% block content %}
+<section class="container my-5" aria-labelledby="confirmar-pedido-titulo">
+  <!-- Encabezado -->
+  <div class="text-center mb-5">
+    <h1 id="confirmar-pedido-titulo" class="fw-bold text-success">
+      <i class="bi bi-check-circle-fill me-2"></i> Confirmar Pedido
+    </h1>
+    <p class="lead">
+      Revisá los detalles de tu compra antes de confirmar.
+    </p>
+  </div>
+
+  <!-- Resumen del pedido -->
+  {% if carrito %}
+  <div class="table-responsive shadow rounded mb-4">
+    <table class="table align-middle">
+      <thead class="table-light">
+        <tr>
+          <th scope="col">Producto</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in carrito %}
+        <tr>
+          <td>{{ item.producto.nombre }}</td>
+          <td>{{ item.cantidad }}</td>
+          <td>${{ item.producto.precio }}</td>
+          <td>${{ item.subtotal }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Total -->
+  <div class="card shadow border-0 mb-4">
+    <div class="card-body text-center">
+      <h4 class="fw-bold">
+        Total a pagar: <span class="text-primary">${{ total }}</span>
+      </h4>
+    </div>
+  </div>
+  {% else %}
+  <div class="alert alert-warning text-center" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    Tu carrito está vacío.
+    <a href="{% url 'Aplicacion2:productos' %}" class="alert-link">Volver a productos</a>
+  </div>
+  {% endif %}
+
+  <!-- Formulario de confirmación -->
+  {% if carrito %}
+  <form method="post" class="text-center">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success btn-lg me-3">
+      <i class="bi bi-bag-check me-2"></i> Confirmar Pedido
+    </button>
+    <a href="{% url 'Aplicacion2:carrito' %}" class="btn btn-outline-secondary btn-lg">
+      <i class="bi bi-arrow-left me-2"></i> Volver al carrito
+    </a>
+  </form>
+  {% endif %}
+</section>
+{% endblock %}

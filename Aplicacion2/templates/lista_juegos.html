@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}🎮 Juegos Disponibles{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+  <!-- Encabezado -->
+  <h1 class="fw-bold text-center mb-5">🎲 Juegos Didácticos</h1>
+
+  <div class="row g-4">
+    {% for juego in juegos %}
+      <div class="col-md-3">
+        <div class="card h-100 shadow-sm border-0 rounded-4 text-center card-hover">
+
+          <!-- Imagen del juego -->
+          {% if juego.imagen %}
+            <img src="{{ juego.imagen.url }}" class="card-img-top" alt="{{ juego.nombre }}" style="height: 180px; object-fit: cover;">
+          {% else %}
+            <img src="{% static 'img/default_game.jpg' %}" class="card-img-top" alt="Juego sin imagen" style="height: 180px; object-fit: cover;">
+          {% endif %}
+
+          <!-- Contenido -->
+          <div class="card-body">
+            <h5 class="fw-bold">{{ juego.nombre }}</h5>
+            <p class="small text-muted">{{ juego.descripcion }}</p>
+          </div>
+
+          <!-- Botón -->
+          <div class="card-footer border-0 text-center glass">
+            {% if juego.archivo_html %}
+              <a href="{% static juego.archivo_html %}" target="_blank" class="btn btn-primary w-100">
+                🎮 Jugar ahora
+              </a>
+            {% else %}
+              <button class="btn btn-secondary w-100" disabled>
+                🔒 No disponible
+              </button>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12 text-center">
+        <p class="text-muted">No hay juegos disponibles.</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Estilos -->
+<style>
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+</style>
+{% endblock %}

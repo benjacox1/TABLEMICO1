@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Recursos para Padres - Tablemico{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+  <!-- Encabezado -->
+  <h1 class="mb-4 text-center fw-bold">📘 Recursos para Padres</h1>
+  <p class="lead text-center text-muted">
+    Aquí encontrarás materiales de apoyo, guías y recomendaciones
+    para acompañar el aprendizaje y desarrollo de tus hijos en casa.
+  </p>
+
+  <!-- Recursos principales -->
+
+  <div class="row mt-5 g-4">
+
+```
+<!-- Guías educativas -->
+<div class="col-md-4">
+  <div class="card shadow-lg h-100 border-0 rounded-3">
+    <div class="card-body text-center">
+      <i class="bi bi-book-half display-4 text-primary"></i>
+      <h4 class="mt-3 fw-semibold">Guías educativas</h4>
+      <p class="text-muted">
+        Estrategias, consejos y documentos prácticos para fomentar
+        el aprendizaje de manera didáctica en casa.
+      </p>
+      <a href="#" class="btn btn-primary btn-sm px-4">
+        <i class="bi bi-download"></i> Descargar guías
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Videos y tutoriales -->
+<div class="col-md-4">
+  <div class="card shadow-lg h-100 border-0 rounded-3">
+    <div class="card-body text-center">
+      <i class="bi bi-play-circle display-4 text-danger"></i>
+      <h4 class="mt-3 fw-semibold">Videos y tutoriales</h4>
+      <p class="text-muted">
+        Material audiovisual diseñado para padres que buscan apoyar
+        el aprendizaje con actividades prácticas y visuales.
+      </p>
+      <a href="#" class="btn btn-danger btn-sm px-4">
+        <i class="bi bi-play-btn"></i> Ver videos
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Recursos descargables -->
+<div class="col-md-4">
+  <div class="card shadow-lg h-100 border-0 rounded-3">
+    <div class="card-body text-center">
+      <i class="bi bi-cloud-arrow-down display-4 text-success"></i>
+      <h4 class="mt-3 fw-semibold">Recursos descargables</h4>
+      <p class="text-muted">
+        Juegos imprimibles, fichas y materiales complementarios para
+        fortalecer el aprendizaje de forma divertida.
+      </p>
+      <a href="#" class="btn btn-success btn-sm px-4">
+        <i class="bi bi-cloud-download"></i> Descargar recursos
+      </a>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- Sección de enlaces recomendados -->
+
+  <div class="mt-5">
+    <h3 class="fw-bold">🔗 Enlaces recomendados</h3>
+    <ul class="list-group list-group-flush shadow-sm rounded-3">
+      <li class="list-group-item">
+        <a href="https://www.unicef.org/es" target="_blank" class="text-decoration-none d-flex align-items-center">
+          <i class="bi bi-globe2 me-2 text-primary"></i>
+          UNICEF - Recursos para la educación de niños y niñas
+        </a>
+      </li>
+      <li class="list-group-item">
+        <a href="https://www.educ.ar/" target="_blank" class="text-decoration-none d-flex align-items-center">
+          <i class="bi bi-bookmark-star me-2 text-success"></i>
+          Educ.ar - Materiales educativos para familias
+        </a>
+      </li>
+      <li class="list-group-item">
+        <a href="https://www.khanacademy.org/" target="_blank" class="text-decoration-none d-flex align-items-center">
+          <i class="bi bi-mortarboard me-2 text-warning"></i>
+          Khan Academy - Aprendizaje gratuito en línea
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Botón volver -->
+
+  <div class="mt-4 text-center">
+    <a href="{% url 'Aplicacion2:inicio' %}" class="btn btn-outline-secondary px-4">
+      <i class="bi bi-arrow-left"></i> Volver al inicio
+    </a>
+  </div>
+</div>
+{% endblock %}

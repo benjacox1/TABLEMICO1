@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Ingreso de Propietario - Juegos Didácticos{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7">
+
+      <!-- Encabezado -->
+      <div class="text-center mb-4">
+        <h2 class="fw-bold text-danger">🔑 Ingreso de Propietario</h2>
+        <p class="text-muted">Accede al panel de gestión exclusivo para propietarios.</p>
+      </div>
+
+      <!-- Mensajes de error -->
+      {% if messages %}
+        <div class="mb-3">
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Formulario -->
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+          <form method="post" novalidate>
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="password" class="form-label fw-semibold">Contraseña</label>
+              <input type="password" name="password" id="password" class="form-control rounded-3 shadow-sm" required aria-describedby="passwordHelp">
+              <div id="passwordHelp" class="form-text text-muted small">Introduce la contraseña de propietario.</div>
+            </div>
+
+            <button type="submit" class="btn btn-danger w-100 py-2 rounded-pill shadow-sm fw-semibold mt-3">
+              🚪 Ingresar
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Botón volver -->
+      <div class="text-center mt-4">
+        <a href="{% url 'Aplicacion2:inicio' %}" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-left"></i> Volver al inicio
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

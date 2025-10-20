@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Crear Juego{% endblock %}
+
+{% block content %}
+    <h1>Crear juego</h1>
+<p>Aquí podrás subir o crear tus juegos más adelante.</p>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h3 class="mb-0">Crear Nuevo Juego</h3>
+                </div>
+                <div class="card-body">
+                    <!-- Formulario -->
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <!-- Mostrar errores generales del formulario -->
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <!-- Campos del formulario -->
+                        <div class="mb-3">
+                            <label for="{{ form.titulo.id_for_label }}" class="form-label">Título</label>
+                            {{ form.titulo }}
+                            {% if form.titulo.errors %}
+                                <div class="text-danger small">
+                                    {{ form.titulo.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.descripcion.id_for_label }}" class="form-label">Descripción</label>
+                            {{ form.descripcion }}
+                            {% if form.descripcion.errors %}
+                                <div class="text-danger small">
+                                    {{ form.descripcion.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.edad_recomendada.id_for_label }}" class="form-label">Edad Recomendada</label>
+                            {{ form.edad_recomendada }}
+                            {% if form.edad_recomendada.errors %}
+                                <div class="text-danger small">
+                                    {{ form.edad_recomendada.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Guardar Juego
+                            </button>
+                            <a href="{% url 'lista_juegos' %}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left"></i> Volver a la Lista
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

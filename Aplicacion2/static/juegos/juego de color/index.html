@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎨 Encuentra el Color</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="game-container">
+    <header>
+      <h1>🎨 Encuentra el Color</h1>
+      <p id="instruction">
+        Haz clic en el color <span id="target-color"></span>
+      </p>
+      <p id="score">Puntuación: 0</p>
+
+      <button
+        id="repeat-instruction"
+        class="access-btn"
+        type="button"
+        aria-label="Repetir instrucción"
+        tabindex="0"
+      >
+        🔊 Repetir Instrucción
+      </button>
+    </header>
+
+    <div class="color-grid" id="color-grid">
+      <!-- Los colores se generan dinámicamente -->
+    </div>
+
+    <p id="feedback" class="feedback"></p>
+    <button id="next-round" type="button">Siguiente Ronda</button>
+  </div>
+
+  <!-- Sonidos -->
+  <audio id="sound-correct" src="sounds/correct.mp3" preload="auto"></audio>
+  <audio id="sound-wrong" src="sounds/wrong.mp3" preload="auto"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>

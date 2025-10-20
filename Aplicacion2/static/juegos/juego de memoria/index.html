@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego de Memoria</title>
+    <link rel="stylesheet" href="estilo2.css" />
+</head>
+<body>
+    <!-- Pantalla Inicio: nombre + rankings -->
+    <div id="pantalla-inicio" class="menu-container">
+        <h1>Juego de Memoria</h1>
+        <p class="instructions">Ingresa tu nombre para ver los rankings y jugar</p>
+        <div class="player-entry">
+            <label for="nombreJugador">Tu nombre:</label>
+            <input id="nombreJugador" type="text" maxlength="20" placeholder="Ingresa tu nombre" oninput="validarNombre()" />
+        </div>
+        <button id="btnContinuar" class="menu-btn" onclick="continuarDificultades()" disabled>Continuar</button>
+        <div class="rankings-wrapper">
+            <div class="ranking-container">
+                <h2>Ranking Fácil</h2>
+                <ul id="rankingFacil" class="ranking-list"></ul>
+            </div>
+            <div class="ranking-container">
+                <h2>Ranking Medio</h2>
+                <ul id="rankingMedio" class="ranking-list"></ul>
+            </div>
+            <div class="ranking-container">
+                <h2>Ranking Difícil</h2>
+                <ul id="rankingDificil" class="ranking-list"></ul>
+            </div>
+        </div>
+        <button id="btnResetRankings" class="reset-ranking-btn" onclick="intentarResetRankings()" title="Restablecer rankings">↺</button>
+    </div>
+
+    <!-- Pantalla selección de dificultad -->
+    <div id="pantalla-dificultad" class="menu-container hidden">
+        <h1>Selecciona la Dificultad</h1>
+        <div class="difficulty-buttons">
+            <button class="difficulty-btn easy" onclick="seleccionarDificultad('facil')">
+                <span class="diff-title">FÁCIL</span>
+                <span class="diff-desc">Tablero 2x2</span>
+            </button>
+            <button class="difficulty-btn medium" onclick="seleccionarDificultad('medio')">
+                <span class="diff-title">MEDIO</span>
+                <span class="diff-desc">Tablero 4x4</span>
+            </button>
+            <button class="difficulty-btn hard" onclick="seleccionarDificultad('dificil')">
+                <span class="diff-title">DIFÍCIL</span>
+                <span class="diff-desc">Tablero 6x6</span>
+            </button>
+        </div>
+        <button class="back-btn" onclick="volverInicio()">Volver</button>
+    </div>
+
+    <!-- Pantalla juego -->
+    <div id="pantalla-juego" class="game-container hidden">
+        <div class="game-header">
+            <h2 id="titulo-dificultad"></h2>
+            <div class="game-info">
+                Tiempo: <span id="tiempo">00:00</span>
+            </div>
+        </div>
+        <div id="tablero" class="board"></div>
+        <div class="game-controls">
+            <button class="control-btn" onclick="reiniciarPartida()">Reiniciar</button>
+            <button class="control-btn" onclick="volverDificultades()">Cambiar Dificultad</button>
+            <button class="control-btn" onclick="volverInicio()">Menú Principal</button>
+        </div>
+        <div id="estado-juego" class="game-status"></div>
+    </div>
+
+    <!-- Modal fin de partida -->
+    <div id="modal-fin" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="fin-titulo"></h2>
+            <p id="fin-detalle"></p>
+            <div class="modal-buttons">
+                <button class="control-btn" onclick="reiniciarPartida()">Jugar de nuevo</button>
+                <button class="control-btn" onclick="volverDificultades()">Elegir Dificultad</button>
+                <button class="control-btn" onclick="volverInicio()">Menú Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mouse-trail" id="mouseTrail"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

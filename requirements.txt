@@ -1,0 +1,8 @@
+Django==5.2.7
+pymysql
+django-widget-tweaks
+django-extensions
+django-jazzmin
+dj-database-url
+whitenoise
+gunicorn

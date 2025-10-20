@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="text-center">
+  <h2 class="mb-3">{{ nombre|title }}</h2>
+  <iframe src="{{ ruta }}" width="100%" height="650px" style="border: none; border-radius: 10px;"></iframe>
+</div>
+{% endblock %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ nombre }} - Tablemico{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="fw-bold mb-3 text-center">{{ nombre }}</h2>
+
+  <div class="ratio ratio-16x9 border rounded-4 shadow-sm">
+    <iframe src="{{ ruta }}" title="{{ nombre }}" frameborder="0"
+            style="width:100%; height:80vh; border:none; border-radius:1rem;">
+    </iframe>
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="{% url 'Aplicacion2:lista_juegos' %}" class="btn btn-outline-primary">
+      ⬅️ Volver a la lista
+    </a>
+  </div>
+</div>
+{% endblock %}
